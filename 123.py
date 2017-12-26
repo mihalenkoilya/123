@@ -21,7 +21,7 @@ class A:
                 mas[i][j] = S
                 #mas = [S for x in range(0, 340)], [S for y in range(height)]
                 print(S)
-                draw.point((i, j), (S, S, S))
+                #draw.point((i, j), (S, S, S))
             sleep(0)
 
 
@@ -72,3 +72,9 @@ if __name__ == '__main__':
     p2.join()
     p3.join()
     print(mas)
+    for i in range(width):
+        for j in range(height):
+            S = mas[i][j]
+            draw.point((i,j), (S,S,S))
+    del draw
+    image.save("ans.jpg", "JPEG")
