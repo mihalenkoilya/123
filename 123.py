@@ -7,7 +7,7 @@ draw = ImageDraw.Draw(image)  # Создаем инструмент для ри�
 width = image.size[0]  # Определяем ширину.
 height = image.size[1]  # Определяем высоту.
 pix = image.load()  # Выгружаем значения пикселей.
-mas = [],[]
+mas = [[0 for x in range(width)] for y in range(height)] 
 
 
 class A:
@@ -18,7 +18,8 @@ class A:
                 b = pix[i, j][1]
                 c = pix[i, j][2]
                 S = (a * 30 + b * 59 + c * 11) // 100
-                mas = [S for x in range(0, 340)], [S for y in range(height)]
+                mas[i][j] = S
+                #mas = [S for x in range(0, 340)], [S for y in range(height)]
                 print(S)
                 draw.point((i, j), (S, S, S))
             sleep(0)
