@@ -7,7 +7,7 @@ draw = ImageDraw.Draw(image)  # Создаем инструмент для ри�
 width = image.size[0]  # Определяем ширину.
 height = image.size[1]  # Определяем высоту.
 pix = image.load()  # Выгружаем значения пикселей.
-mas = Array(0, range(width*height))
+mas = Array('i', range(width*height))
 
 
 class A:
