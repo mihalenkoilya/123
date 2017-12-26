@@ -1,4 +1,4 @@
-from multiprocessing import Process
+from multiprocessing import Process, Array
 from time import sleep
 from PIL import Image, ImageDraw  # Подключим необходимые библиотеки.
 
@@ -7,18 +7,18 @@ draw = ImageDraw.Draw(image)  # Создаем инструмент для ри�
 width = image.size[0]  # Определяем ширину.
 height = image.size[1]  # Определяем высоту.
 pix = image.load()  # Выгружаем значения пикселей.
-mas = [[0 for x in range(width)] for y in range(height)] 
+mas = Array(0, range(width*height))
 
 
 class A:
-    def __call__(self):
+    def __call__(self, mas):
         for i in range(0, 340):
             for j in range(height):
                 a = pix[i, j][0]
                 b = pix[i, j][1]
                 c = pix[i, j][2]
                 S = (a * 30 + b * 59 + c * 11) // 100
-                mas[i][j] = S
+                mas[i*height + j] = S
                 #mas = [S for x in range(0, 340)], [S for y in range(height)]
                 print(S)
                 #draw.point((i, j), (S, S, S))
@@ -60,7 +60,7 @@ if __name__ == '__main__':
     b = B()
     c = C()
 
-    p1 = Process(target=a, args=())
+    p1 = Process(target=a, args=(mas))
     p2 = Process(target=b, args=())
     p3 = Process(target=c, args=())
 
@@ -74,7 +74,7 @@ if __name__ == '__main__':
     print(mas)
     for i in range(width):
         for j in range(height):
-            S = mas[i][j]
+            S = mas[i*height + j]
             draw.point((i,j), (S,S,S))
     del draw
     image.save("ans.jpg", "JPEG")
