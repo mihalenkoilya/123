@@ -7,46 +7,49 @@ draw = ImageDraw.Draw(image)  # Создаем инструмент для ри�
 width = image.size[0]  # Определяем ширину.
 height = image.size[1]  # Определяем высоту.
 pix = image.load()  # Выгружаем значения пикселей.
+mas = [],[]
 
 
 class A:
-    def __call__(self, count=10, sleep_time=0.5):
+    def __call__(self):
         for i in range(0, 340):
-            for j in range(0 - 192):
+            for j in range(height):
                 a = pix[i, j][0]
                 b = pix[i, j][1]
                 c = pix[i, j][2]
                 S = (a * 30 + b * 59 + c * 11) // 100
+                mas = [S for x in range(0, 340)], [S for y in range(height)]
                 print(S)
                 draw.point((i, j), (S, S, S))
-            sleep(sleep_time)
+            sleep(0)
 
 
 class B:
-    def __call__(self, count=10, sleep_time=0.5):
+    def __call__(self):
         for i in range(341, 680):
-            for j in range(193, 385):
+            for j in range(height):
                 a = pix[i, j][0]
                 b = pix[i, j][1]
                 c = pix[i, j][2]
                 S = (a * 30 + b * 59 + c * 11) // 100
+                mas = [S for x in range(341, 680)], [S for y in range(height)]
                 print(S)
                 draw.point((i, j), (S, S, S))
-
-            sleep(sleep_time)
+            sleep(0)
 
 
 class C:
-    def __call__(self, count=10, sleep_time=0.5):
+    def __call__(self):
         for i in range(681, 1024):
-            for j in range(386, 578):
+            for j in range(height):
                 a = pix[i, j][0]
                 b = pix[i, j][1]
                 c = pix[i, j][2]
                 S = (a * 30 + b * 59 + c * 11) // 100
+                mas = [S for x in range(681, 1024)], [S for y in range(height)]
                 print(S)
                 draw.point((i, j), (S, S, S))
-            sleep(sleep_time)
+            sleep(0)
 
 
 # image.save("ans.jpg", "JPEG")
@@ -59,6 +62,7 @@ if __name__ == '__main__':
     p1 = Process(target=a, args=())
     p2 = Process(target=b, args=())
     p3 = Process(target=c, args=())
+
     p1.start()
     p2.start()
     p3.start()
@@ -66,3 +70,4 @@ if __name__ == '__main__':
     p1.join()
     p2.join()
     p3.join()
+    print(mas)
