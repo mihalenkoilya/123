@@ -9,68 +9,34 @@ height = image.size[1]  # Определяем высоту.
 pix = image.load()  # Выгружаем значения пикселей.
 mas = Array('i', range(width*height))
 
+process_count = 3
 
-class A:
-    def __call__(self, mas):
-        for i in range(0, 340):
-            for j in range(height):
-                a = pix[i, j][0]
-                b = pix[i, j][1]
-                c = pix[i, j][2]
-                S = (a * 30 + b * 59 + c * 11) // 100
-                mas[i*height + j] = S
-                #mas = [S for x in range(0, 340)], [S for y in range(height)]
-                print(S)
-                #draw.point((i, j), (S, S, S))
+def f(num, mas):
+    for i in range(num*width//process_count, (num+1)*width//process_count):
+        for j in range(height):
+            a = pix[i, j][0]
+            b = pix[i, j][1]
+            c = pix[i, j][2]
+            S = (a * 30 + b * 59 + c * 11) // 100
+            mas[i*height + j] = S
+            print(S)
             sleep(0)
-
-
-class B:
-    def __call__(self):
-        for i in range(341, 680):
-            for j in range(height):
-                a = pix[i, j][0]
-                b = pix[i, j][1]
-                c = pix[i, j][2]
-                S = (a * 30 + b * 59 + c * 11) // 100
-                mas = [S for x in range(341, 680)], [S for y in range(height)]
-                print(S)
-                draw.point((i, j), (S, S, S))
-            sleep(0)
-
-
-class C:
-    def __call__(self):
-        for i in range(681, 1024):
-            for j in range(height):
-                a = pix[i, j][0]
-                b = pix[i, j][1]
-                c = pix[i, j][2]
-                S = (a * 30 + b * 59 + c * 11) // 100
-                mas = [S for x in range(681, 1024)], [S for y in range(height)]
-                print(S)
-                draw.point((i, j), (S, S, S))
-            sleep(0)
-
-
-# image.save("ans.jpg", "JPEG")
-# del draw
+      
 if __name__ == '__main__':
     a = A()
     b = B()
     c = C()
+    
+    arr = []
+    for i in range(process_count):
+        p = Process(target=a, args=(i,mas))
+        arr.append(p)
+        p.start()
+    
+    for i in range(process_count):
+        p = arr[i]
+        p.join()
 
-    p1 = Process(target=a, args=(mas))
-    p2 = Process(target=b, args=())
-    p3 = Process(target=c, args=())
-
-    p1.start()
-    p2.start()
-    p3.start()
-
-    p1.join()
-    p2.join()
-    p3.join()
     print(mas)
     for i in range(width):
         for j in range(height):
